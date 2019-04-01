@@ -1,6 +1,8 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).<br>
 This project is periodlly in the 1st section,  html created with React and AntD！
 
+# version1.0
+ it's now version 1.0,which means it only give access to static webpages.
 ## Available Scripts
 
 In the project directory, you can run:
