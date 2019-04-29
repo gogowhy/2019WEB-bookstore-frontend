@@ -1,75 +1,120 @@
-
-
-import { Layout, Menu, Breadcrumb, Icon,Button,Form} from 'antd';
-import { Table, Divider, Tag } from 'antd';
+import { Layout, Menu, Breadcrumb, Icon,Button,Form, Table,Input} from 'antd';
+import axios from 'axios';
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import logo from './logo.svg';
 import './order.css' ;
 import { Link } from 'react-router-dom';
-import Cartform from'./cartform';
+import Highlighter from 'react-highlight-words';
+import { Resizable } from 'react-resizable';
+import { the_config } from './config';
+
 const { Header, Content, Footer, Sider } = Layout;
-
-
-const columns = [{
-    title: 'Bookname',
-    dataIndex: 'Bookname',
-    key: 'Bookname',
-    render: text => <a href="javascript:;">{text}</a>,
-  }, {
-    title: 'Price',
-    dataIndex: 'Price',
-    key: 'Price',
-  }, {
-    title: 'Details',
-    dataIndex: 'Details',
-    key: 'Details',
-  }, {
-    title: 'Action',
-    key: 'action',
-    render: (text, record) => (
-      <span>
-        <a href="javascript:;">Buy it again {record.Bookname}</a>
-        <Divider type="vertical" />
-        <a href="javascript:;">Delete</a>
-      </span>
-    ),
-  }];
-  
-  const data = [{
-    key: '1',
-    Bookname: 'John Brown',
-    Price: 32,
-    Details: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-  }, {
-    key: '2',
-    Bookname: 'Jim Green',
-    Price: 42,
-    Details: 'London No. 1 Lake Park',
-    tags: ['loser'],
-  }, {
-    key: '3',
-    Bookname: 'Joe Black',
-    Price: 32,
-    Details: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  }];
-
-
-class order extends Component {
-   state = {
-        collapsed: false,
-        mode: 'inline',
-    };
-
-    toggle = () => {
-        this.setState({
-            collapsed: !this.state.collapsed,
-        });
-    }
+const ResizeableTitle = (props) => {
+    const { onResize, width, ...restProps } = props;
     
-    render() {
+      if (!width) {
+        return <th {...restProps} />;
+      }
+    
+      return (
+        <Resizable width={width} height={0} onResize={onResize}>
+          <th {...restProps} />
+        </Resizable>
+      );
+    };
+const rowSelection = {
+        onChange: (selectedRowKeys, selectedRows) => {
+          console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+        },
+        getCheckboxProps: record => ({
+          disabled: record.name === 'Disabled User', // Column configuration not to be checked
+          name: record.name,
+        }),
+      };
+
+class order extends React.Component
+ {
+    state = {
+        columns: [{
+          title: 'orderid',
+          dataIndex: 'orderid',
+          width: 200,
+        }, {
+          title: 'Price',
+          dataIndex: 'price',
+          width: 100,
+        }, {
+          title: 'Bookname',
+          dataIndex: 'bookname',
+          width: 100,
+        }, {
+          title: 'Number',
+          dataIndex: 'number',
+          width: 100,
+        },{
+          title: 'Date',
+          dataIndex: 'ordertime',
+          width: 100,
+        }, {
+          title: 'Action',
+          key: 'action',
+          render: () => (
+            <a href="javascript:;">Delete</a>
+          ), }
+        ],
+        collapsed: false
+      };
+    
+    components = {
+        header: {
+          cell: ResizeableTitle,
+        },
+      };
+    
+    handleResize = index => (e, { size }) => {
+        this.setState(({ columns }) => {
+          const nextColumns = [...columns];
+          nextColumns[index] = {
+            ...nextColumns[index],
+            width: size.width,
+          };
+          return { columns: nextColumns };
+        });
+      };
+  
+      componentDidMount(){
+        let formData = new FormData();
+        formData.append('username', the_config.username);
+        const _this=this;    //先存一下this，以防使用箭头函数this会指向我们不希望它所指向的对象。
+        axios.get("order/queryorder", {
+        
+          mode: 'cors',
+          body: formData
+      })
+        .then(function (response) {
+          _this.setState({
+            users:response.data,
+            isLoaded:true
+          });
+        })
+        .catch(function (error) {
+          console.log(error);
+          _this.setState({
+            isLoaded:false,
+            error:error
+          })
+        })
+      }
+      render() {
+        const columns = this.state.columns.map((col, index) => ({
+          ...col,
+          onHeaderCell: column => ({
+            width: column.width,
+            onResize: this.handleResize(index),
+          }),
+        }));
+    
         return (
             <Layout>
                 <Sider 
@@ -77,12 +122,12 @@ class order extends Component {
                     collapsible
                     collapsed={this.state.collapsed}
                 >   <Button type="primary" icon="fire"  >Hi,</Button>
-                    <div classBookname="logo" />
-                    <Button type="default" icon="team" classBookname="regist_button"  ><Link to="/Register/">Login/Register</Link></Button>
+                    <div className="logo" />
+                    <Button type="default" icon="team" className="regist_button"  ><Link to="/Register/">Login/Register</Link></Button>
                     <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
                         <Menu.Item key="1">
-                            <Icon type="shopping-cart" />
-                            <span classBookname="nav-text">My cart</span>
+                            <Icon type="book" />
+                            <span className="nav-text">Book View</span>
                         </Menu.Item>
                         
                     </Menu>
@@ -92,7 +137,7 @@ class order extends Component {
                     <Header style={{ background: '#000', padding: 0 }}>
                        <span style={{color:'#fff', paddingLeft:'2%', fontSize:'1.4em'}}>
                             <Icon
-                                classBookname="trigger"
+                                className="trigger"
                                 type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
                                 onClick={this.toggle}
                                 style={{cursor: 'pointer'}}
@@ -100,20 +145,26 @@ class order extends Component {
                         </span> {/*这里实现的是点击左右拉扯的动画*/}
                         <span style={{color:'#fff', paddingLeft:'2%', fontSize:'1.4em'}}>EBOOK SYSTEM</span>
                         <span style={{color:'#fff', float:'right', paddingRight:'1%'}}>
-                            <img src={logo} classBookname="App-logo" alt="logo" />
+                            <img src={logo} className="App-logo" alt="logo" />
                         </span>{/*这里实现右侧旋转logo*/}
                     </Header>
                     <Content style={{ margin: '0 16px' }}>
                         <Breadcrumb style={{ margin: '12px 0' }}>
-                            <Breadcrumb.Item>My Cart</Breadcrumb.Item>
+                            <Breadcrumb.Item>Bookview</Breadcrumb.Item>
                             
                         </Breadcrumb>
-                        <div style={{ padding: 24, background: '#fff', minHeight: 780 }}>My Cart
+                        <div style={{ padding: 24, background: '#fff', minHeight: 780 }}>Book view
                         
-                        <Table columns={columns} dataSource={data} > </Table>
-                        
+                        <Table
+            bordered
+            rowSelection={rowSelection}
+            components={this.components}
+            columns={columns}
+            dataSource={this.state.users}
+          />
+                        <Button type="default" icon="money" >CHECK NOW!</Button>
                         <Button type="default" icon="home"><Link to ="/">Back to index</Link></Button>
-                        
+                         
                         </div>
                     </Content>{/*这里是面包屑导航*/}
                     <Footer style={{ textAlign: 'center' }}>
@@ -122,7 +173,8 @@ class order extends Component {
                 </Layout>
             </Layout>
         );
-    }
-}
+      }
 
-export default order; 
+
+ }
+ export default order;

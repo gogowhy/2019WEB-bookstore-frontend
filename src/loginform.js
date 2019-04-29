@@ -1,9 +1,77 @@
+import React from 'react';
+import {Form, Icon, Input, Button, message} from 'antd';
+import 'whatwg-fetch';
+import './Login.css';
+import './config';
+import { Link } from 'react-router-dom';
+import cookie from 'react-cookies';
+import { the_config } from './config';
+
+const FormItem = Form.Item;
+
+class Login extends React.Component {
+    //登录事件
+    handleSubmit = (e) => {
+        e.preventDefault();
+        let url = "/user/login";
+        let formData = new FormData();
+        formData.append('username', this.props.form.getFieldValue("username"));
+        formData.append('userpwd', this.props.form.getFieldValue("userpwd"));
+        the_config.username=this.props.form.getFieldValue("username");
+        fetch(url, {
+                method: 'post',
+                mode: 'cors',
+                body: formData
+            }).then(function (response) {
+            return response.text()
+        }).then(function (body) {
+                message.info(body);
+            });
+    }
+    render() {
+        const {getFieldDecorator} = this.props.form;
+        return (
+            <Form onSubmit={this.handleSubmit} className="login-form">
+                <FormItem>
+                    {getFieldDecorator('username', {})(
+                        <Input
+                            prefix={< Icon type = "user" style = {{ fontSize: 13 }}/>}
+                            placeholder="帐号"/>
+                    )}
+                </FormItem>
+                <FormItem>
+                    {getFieldDecorator('userpwd', {})(
+                        <Input
+                            prefix={< Icon type = "lock" style = {{ fontSize: 13 }}/>}
+                            type="password"
+                            placeholder="密码"/>
+                    )}
+                </FormItem>
+                <FormItem>
+                    <Button type="primary" htmlType="submit" className="login-form-button">
+                        登录
+                    </Button>
+                    Or <a><Link to="/register"> register now!</Link> </a>
+                </FormItem>
+            </Form>
+             
+        );
+    }
+}
+const WrappedNormalLoginForm = Form.create()(Login);
+export default WrappedNormalLoginForm;
+
+
+
+
+/*
 import {
   Form, Icon, Input, Button, Checkbox,
 } from 'antd';
 import React, { Component } from 'react';
 import './loginform.css'
 import { Link } from 'react-router-dom';
+import 'whatwg-fetch';
 class NormalLoginForm extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
@@ -54,3 +122,4 @@ class NormalLoginForm extends React.Component {
 export default NormalLoginForm;
 
 
+*/

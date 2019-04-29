@@ -2,8 +2,9 @@ import { Layout, Menu, Breadcrumb, Icon,Button} from 'antd';
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import logo from '../logo.svg';
-import './Navi.css'
+import './Navi.css';
 import { Link } from 'react-router-dom';
+import { the_config } from '../config';
 const { Header, Content, Footer, Sider } = Layout;
 
   
@@ -14,6 +15,25 @@ class SiderDemo extends Component {
         collapsed: false,
         mode: 'inline',
     };
+
+    handle=()=>{
+        const w=window.open('about:blank');
+        w.location.href="/bookview"
+      }
+
+      opencart=()=>{
+        const w=window.open('about:blank');
+        w.location.href="/cart"
+      }
+      openorder=()=>{
+        const w=window.open('about:blank');
+        w.location.href="/order"
+      }
+      openlogin=()=>{
+        const w=window.open('about:blank');
+        w.location.href="/Login"
+      }
+     
 
     toggle = () => {
         this.setState({
@@ -28,23 +48,23 @@ class SiderDemo extends Component {
                     trigger={null}
                     collapsible
                     collapsed={this.state.collapsed}
-                >   <Button type="primary" icon="fire">Hi,</Button>
+                >   <Button type="primary" icon="fire">Hi,{the_config.username}</Button>
                     <div className="logo" />
-                    <Button type="default" icon="team" className="regist_button"  ><Link to="/Login/">Login/Register</Link></Button>
+                    <Button type="default" icon="team" className="regist_button"  onClick={this.openlogin} >Login/Register</Button>
                     <Menu theme="light" mode="inline" defaultSelectedKeys={['1']}>
                    
                         <Menu.Item key="1">
                             <Icon type="barcode" />
-                            <span className="nav-text" > <Link to="/bookview/">Book view</Link></span>
+                            <span className="nav-text" onClick={this.handle}> Book view</span>
                             
                         </Menu.Item>
                         <Menu.Item key="2">
                             <Icon type="shopping-cart" />
-                            <span className="nav-text"><Link to="/cart/">Cart</Link></span>
+                            <span className="nav-text" onClick={this.opencart}>Cart</span>
                         </Menu.Item>
                         <Menu.Item key="3">
                             <Icon type="check" />
-                            <span className="nav-text"><Link to="/order/">Order</Link></span>
+                            <span className="nav-text" onClick={this.openorder}>Order</span>
                         </Menu.Item>
                     </Menu>
                 </Sider>
@@ -80,6 +100,9 @@ class SiderDemo extends Component {
             </Layout>
         );
     }
+   
+    
+
 }
 
 export default SiderDemo;

@@ -1,7 +1,7 @@
 
 
 import { Layout, Menu, Breadcrumb, Icon,Button,Form} from 'antd';
-
+import 'isomorphic-fetch';
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import logo from './logo.svg';
@@ -9,8 +9,8 @@ import './Login.css' ;
 import { Link } from 'react-router-dom';
 import NormalLoginForm from'./loginform';
 
-const { Header, Content, Footer, Sider } = Layout;
 
+const { Header, Content, Footer, Sider } = Layout;
 
 
 const WrappedNormalLoginForm = Form.create({ name: 'normal_login' })(NormalLoginForm);

@@ -1,33 +1,118 @@
-
-
-import { Layout, Menu, Breadcrumb, Icon,Button,Form} from 'antd';
-
+import { Layout, Menu, Breadcrumb, Icon,Button,Form, Table,Input} from 'antd';
+import axios from 'axios';
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import logo from './logo.svg';
 import './cart.css' ;
 import { Link } from 'react-router-dom';
-import Cartform from'./cartform';
+import Highlighter from 'react-highlight-words';
+import { Resizable } from 'react-resizable';
+import Normalchecknow from './checknow';
+
+
+const WrappedNormalchecknow = Form.create({ name: 'normal_login' })(Normalchecknow);
 
 const { Header, Content, Footer, Sider } = Layout;
-
-
-
-
-
-class Login extends Component {
-   state = {
-        collapsed: false,
-        mode: 'inline',
-    };
-
-    toggle = () => {
-        this.setState({
-            collapsed: !this.state.collapsed,
-        });
-    }
+const ResizeableTitle = (props) => {
+    const { onResize, width, ...restProps } = props;
     
-    render() {
+      if (!width) {
+        return <th {...restProps} />;
+      }
+    
+      return (
+        <Resizable width={width} height={0} onResize={onResize}>
+          <th {...restProps} />
+        </Resizable>
+      );
+    };
+const rowSelection = {
+        onChange: (selectedRowKeys, selectedRows) => {
+          console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+        },
+        getCheckboxProps: record => ({
+          disabled: record.name === 'Disabled User', // Column configuration not to be checked
+          name: record.name,
+        }),
+      };
+
+class cart extends React.Component
+ {
+    state = {
+        columns: [{
+          title: 'orderid',
+          dataIndex: 'orderid',
+          width: 200,
+        }, {
+          title: 'Price',
+          dataIndex: 'price',
+          width: 100,
+        }, {
+          title: 'Bookname',
+          dataIndex: 'bookname',
+          width: 100,
+        }, {
+          title: 'Number',
+          dataIndex: 'number',
+          width: 100,
+        },{
+          title: 'Date',
+          dataIndex: 'ordertime',
+          width: 100,
+        }, {
+          title: 'Action',
+          key: 'action',
+          render: () => (
+            <a href="javascript:;">Delete</a>
+          ), }
+        ],
+        collapsed: false
+      };
+    
+    components = {
+        header: {
+          cell: ResizeableTitle,
+        },
+      };
+    
+    handleResize = index => (e, { size }) => {
+        this.setState(({ columns }) => {
+          const nextColumns = [...columns];
+          nextColumns[index] = {
+            ...nextColumns[index],
+            width: size.width,
+          };
+          return { columns: nextColumns };
+        });
+      };
+  
+      componentDidMount(){
+        const _this=this;    //先存一下this，以防使用箭头函数this会指向我们不希望它所指向的对象。
+        axios.get("order/querycart")
+        .then(function (response) {
+          _this.setState({
+            users:response.data,
+            isLoaded:true
+          });
+        })
+        .catch(function (error) {
+          console.log(error);
+          _this.setState({
+            isLoaded:false,
+            error:error
+          })
+        })
+      }
+
+      render() {
+        const columns = this.state.columns.map((col, index) => ({
+          ...col,
+          onHeaderCell: column => ({
+            width: column.width,
+            onResize: this.handleResize(index),
+          }),
+        }));
+    
         return (
             <Layout>
                 <Sider 
@@ -39,8 +124,8 @@ class Login extends Component {
                     <Button type="default" icon="team" className="regist_button"  ><Link to="/Register/">Login/Register</Link></Button>
                     <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
                         <Menu.Item key="1">
-                            <Icon type="shopping-cart" />
-                            <span className="nav-text">My cart</span>
+                            <Icon type="book" />
+                            <span className="nav-text">Book View</span>
                         </Menu.Item>
                         
                     </Menu>
@@ -63,15 +148,25 @@ class Login extends Component {
                     </Header>
                     <Content style={{ margin: '0 16px' }}>
                         <Breadcrumb style={{ margin: '12px 0' }}>
-                            <Breadcrumb.Item>My Cart</Breadcrumb.Item>
+                            <Breadcrumb.Item>Bookview</Breadcrumb.Item>
                             
                         </Breadcrumb>
-                        <div style={{ padding: 24, background: '#fff', minHeight: 780 }}>My Cart
+                        <div style={{ padding: 24, background: '#fff', minHeight: 780 }}>Book view
                         
-                        <Cartform></Cartform>
+                        <Table
+            bordered
+            rowSelection={rowSelection}
+            components={this.components}
+            columns={columns}
+            dataSource={this.state.users}
+          />
+
+
+
+          <WrappedNormalchecknow></WrappedNormalchecknow>
                         <Button type="default" icon="money">CHECK NOW!</Button>
                         <Button type="default" icon="home"><Link to ="/">Back to index</Link></Button>
-                        
+                         
                         </div>
                     </Content>{/*这里是面包屑导航*/}
                     <Footer style={{ textAlign: 'center' }}>
@@ -80,7 +175,13 @@ class Login extends Component {
                 </Layout>
             </Layout>
         );
-    }
-}
+      }
 
-export default Login; 
+
+ }
+ export default cart;
+
+    
+
+
+
