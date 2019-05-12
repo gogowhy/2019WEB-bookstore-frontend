@@ -9,6 +9,7 @@ import bookview from './bookview';
 import admin from './admin';
 import bookmanagement from'./bookmanagement/bookmanagement';
 import usermanagement from'./usermanagement/usermanagement';
+import notfound from'./notfound/notfound';
 
 class App extends React.Component {
 render(){
@@ -24,6 +25,7 @@ return(
 <Route path="/admin" component={admin}/>
 <Route path="/bookmanagement" component={bookmanagement}/>
 <Route path="/usermanagement" component={usermanagement}/>
+<Route path="/notfound" component={notfound}/>
 </div>
 </Router>
 )

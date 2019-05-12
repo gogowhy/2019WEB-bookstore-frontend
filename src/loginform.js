@@ -6,11 +6,23 @@ import './config';
 import { Link } from 'react-router-dom';
 import cookie from 'react-cookies';
 import { the_config } from './config';
-
+import axios from 'axios';
 const FormItem = Form.Item;
 
 class Login extends React.Component {
     //登录事件
+
+
+    constructor(props){
+      super(props);
+      this.state={
+        users:[],
+        isLoaded:false
+      }
+    }
+
+
+
     handleSubmit = (e) => {
         e.preventDefault();
         let url = "/user/login";
@@ -27,20 +39,45 @@ class Login extends React.Component {
         }).then(function (body) {
                 message.info(body);
             });
-          if(this.props.form.getFieldValue("username")=="root")
-          {
-            const w=window.open('about:blank');
-             w.location.href="/admin"
-          }
-          else
-          {
-            const w=window.open('about:blank');
-             w.location.href="/"
-          }
-    }
 
+
+            const _this=this;
+            axios.get("user/checkuser")
+            .then(function (response) {
+              _this.setState({
+                users:response.data,
+                isLoaded:true
+              });
+            })
+            .catch(function (error) {
+              console.log(error);
+              _this.setState({
+                isLoaded:false,
+                error:error
+              })
+            })
+          
     
+          
+    
+if(this.state.users=="0")
+{
+          
+    const w=window.open('about:blank');
+    w.location.href="/"
+        
+}
+if(this.state.users="1")
+{
+  const w=window.open('about:blank');
+             w.location.href="/admin"
+}
+else{
+  const w=window.open('about:blank');
+             w.location.href="/notfound"
+}
 
+ }
 
     render() {
         const {getFieldDecorator} = this.props.form;
