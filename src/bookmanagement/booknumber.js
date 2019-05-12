@@ -1,21 +1,20 @@
 import React from 'react';
 import {Form, Icon, Input, Button, message} from 'antd';
 import 'whatwg-fetch';
-import './Login.css';
+import '../Login.css';
 import { Link } from 'react-router-dom';
 import cookie from 'react-cookies';
 
-
 const FormItem = Form.Item;
 
-class checknow extends React.Component {
-    //提交购物车事件
+class booknumber extends React.Component {
+    //修改书籍库存事件
     handleSubmit = (e) => {
         e.preventDefault();
-        let url = "/books/checknow";
+        let url = "/books/booknumber";
         let formData = new FormData();
-        formData.append('orderid', this.props.form.getFieldValue("orderid"));
-
+        formData.append('bookname', this.props.form.getFieldValue("bookname"));
+        formData.append('booknumber', this.props.form.getFieldValue("booknumber"));
         fetch(url, {
                 method: 'post',
                 mode: 'cors',
@@ -31,16 +30,22 @@ class checknow extends React.Component {
         return (
             <Form onSubmit={this.handleSubmit} className="login-form">
                 <FormItem>
-                    {getFieldDecorator('orderid', {})(
+                    {getFieldDecorator('bookname', {})(
                         <Input
-                            prefix={< Icon type = "money" style = {{ fontSize: 13 }}/>}
-                            placeholder="请输入您想结账的订单号orderid"/>
+                            prefix={< Icon type = "book" style = {{ fontSize: 13 }}/>}
+                            placeholder="请输入您想修改库存数量的书籍名称"/>
                     )}
                 </FormItem>
-                
+                <FormItem>
+                    {getFieldDecorator('booknumber', {})(
+                        <Input
+                            prefix={< Icon type = "book" style = {{ fontSize: 13 }}/>}
+                            placeholder="请输入您想修改的库存数量"/>
+                    )}
+                </FormItem>
                 <FormItem>
                     <Button type="primary" htmlType="submit" className="login-form-button">
-                     现在结账！！！
+                   修改书籍的库存
                     </Button>
                 </FormItem>
             </Form>
@@ -48,5 +53,5 @@ class checknow extends React.Component {
         );
     }
 }
-const WrappedNormalchecknow = Form.create()(checknow);
-export default WrappedNormalchecknow;
+const WrappedNormalbooknumber = Form.create()(booknumber);
+export default WrappedNormalbooknumber;

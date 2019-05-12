@@ -1,10 +1,5 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).<br>
-This project is periodlly in the 1st section,  html created with React and AntD！
-# version2.0
- it's now version 2.0,2019.4.29，I connected front and back-end,with React and Springboot.
-## Available Scripts
-# version1.0
- it's now version 1.0,which means it only give access to static webpages.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
 ## Available Scripts
 
 In the project directory, you can run:

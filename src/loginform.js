@@ -27,7 +27,21 @@ class Login extends React.Component {
         }).then(function (body) {
                 message.info(body);
             });
+          if(this.props.form.getFieldValue("username")=="root")
+          {
+            const w=window.open('about:blank');
+             w.location.href="/admin"
+          }
+          else
+          {
+            const w=window.open('about:blank');
+             w.location.href="/"
+          }
     }
+
+    
+
+
     render() {
         const {getFieldDecorator} = this.props.form;
         return (
@@ -48,7 +62,7 @@ class Login extends React.Component {
                     )}
                 </FormItem>
                 <FormItem>
-                    <Button type="primary" htmlType="submit" className="login-form-button">
+                    <Button type="primary"  htmlType="submit"  className="login-form-button">
                         登录
                     </Button>
                     Or <a><Link to="/register"> register now!</Link> </a>
