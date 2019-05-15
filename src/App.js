@@ -10,6 +10,8 @@ import admin from './admin';
 import bookmanagement from'./bookmanagement/bookmanagement';
 import usermanagement from'./usermanagement/usermanagement';
 import notfound from'./notfound/notfound';
+import ordermanagement from './ordermanagement/ordermanagement';
+import booksales from './bookmanagement/booksales';
 
 class App extends React.Component {
 render(){
@@ -26,6 +28,8 @@ return(
 <Route path="/bookmanagement" component={bookmanagement}/>
 <Route path="/usermanagement" component={usermanagement}/>
 <Route path="/notfound" component={notfound}/>
+<Route path="/ordermanagement" component={ordermanagement}/>
+<Route path="/booksales" component={booksales}/>
 </div>
 </Router>
 )

@@ -9,12 +9,16 @@ import Highlighter from 'react-highlight-words';
 import Normalbookdelete from './bookdelete';
 import Normalbooknumber from  './booknumber';
 import Normalnewbook from  './newbook';
+import Normalbookdescription from './bookdescription';
+
 
 const { Header, Content, Footer, Sider } = Layout;
 
 const WrappedNormalbookdelete=Form.create({name:'normal_login'})(Normalbookdelete);
 const WrappedNormalbooknumber=Form.create({name:'normal_login'})(Normalbooknumber);
 const WrappedNormalnewbook=Form.create({name:'normal_login'})(Normalnewbook);
+const Wrappednormalbookdescription=Form.create({name:'normal_login'})(Normalbookdescription);
+
 class bookmanagement extends React.Component {
     state = {
         searchText: '',
@@ -190,7 +194,11 @@ class bookmanagement extends React.Component {
 
                     <WrappedNormalbooknumber></WrappedNormalbooknumber>
 
+                    <Wrappednormalbookdescription></Wrappednormalbookdescription>
+
                     <WrappedNormalnewbook></WrappedNormalnewbook>
+
+              
                     <Button type="default" icon="home"><Link to ="/admin">Back to management</Link></Button>
                      
                     </div>

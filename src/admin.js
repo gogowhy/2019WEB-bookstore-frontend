@@ -25,7 +25,16 @@ class Admin extends Component {
         const w=window.open('about:blank');
         w.location.href="/usermanagement"
       }
-      
+
+      openordermanagement=()=>{
+        const w=window.open('about:blank');
+        w.location.href="/ordermanagement"
+      }
+
+      openbooksales=()=>{
+        const w=window.open('about:blank');
+        w.location.href="/booksales"
+      }
     toggle = () => {
         this.setState({
             collapsed: !this.state.collapsed,
@@ -53,7 +62,14 @@ class Admin extends Component {
                             <Icon type="user" />
                             <span className="nav-text" onClick={this.openusermanagement}>User management</span>
                         </Menu.Item>
-                       
+                        <Menu.Item key="3">
+                            <Icon type="dollar" />
+                            <span className="nav-text" onClick={this.openordermanagement}>Order management</span>
+                        </Menu.Item>
+                        <Menu.Item key="4">
+                            <Icon type="book" />
+                            <span className="nav-text" onClick={this.openbooksales}>Book sales</span>
+                        </Menu.Item>
                     </Menu>
                 </Sider>
                 <Layout>

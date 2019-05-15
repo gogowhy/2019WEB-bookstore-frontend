@@ -58,24 +58,24 @@ class Login extends React.Component {
             })
           
     
-          
-    
-if(this.state.users=="0")
-{
-          
-    const w=window.open('about:blank');
-    w.location.href="/"
-        
-}
-if(this.state.users="1")
-{
-  const w=window.open('about:blank');
-             w.location.href="/admin"
-}
-else{
-  const w=window.open('about:blank');
-             w.location.href="/notfound"
-}
+            if(this.props.form.getFieldValue("username")=="root")
+            {
+              const w=window.open('about:blank');
+               w.location.href="/admin"
+            }
+            else
+            {
+              if(this.state.users=="0")
+              {
+                const w=window.open('about:blank');
+               w.location.href="/"
+              }
+              else
+              {
+                const w=window.open('about:blank');
+                w.location.href="/notfound"
+              }
+            }
 
  }
 

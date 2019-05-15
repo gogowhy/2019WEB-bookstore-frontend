@@ -2,12 +2,12 @@ import { Layout, Menu, Breadcrumb, Icon,Button,Form, Table,Input} from 'antd';
 import axios from 'axios';
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import logo from './logo.svg';
-import './order.css' ;
+import logo from '../logo.svg';
+import '../order.css' ;
 import { Link } from 'react-router-dom';
 import Highlighter from 'react-highlight-words';
 import { Resizable } from 'react-resizable';
-import { the_config } from './config';
+import { the_config } from '../config';
 
 const { Header, Content, Footer, Sider } = Layout;
 const ResizeableTitle = (props) => {
@@ -33,10 +33,19 @@ const rowSelection = {
         }),
       };
 
-class order extends React.Component
+class ordermanagement extends React.Component
  {
     state = {
+        searchText: '',
+        collapsed: false
+      };
+   
+    /*state = {
         columns: [{
+            title: 'userid',
+            dataIndex: 'userid',
+            width: 200,
+          },{
           title: 'orderid',
           dataIndex: 'orderid',
           width: 200,
@@ -61,10 +70,12 @@ class order extends React.Component
           key: 'action',
           render: () => (
             <a href="javascript:;">Delete</a>
-          ), }
+          ), },
         ],
+        searchText: '',
         collapsed: false
-      };
+      };*/
+      
     
     components = {
         header: {
@@ -83,11 +94,16 @@ class order extends React.Component
         });
       };
   
+
+
+
+
+      
       componentDidMount(){
         let formData = new FormData();
-        formData.append('username', the_config.username);
+        
         const _this=this;    //先存一下this，以防使用箭头函数this会指向我们不希望它所指向的对象。
-        axios.get("order/queryorder", {
+        axios.get("order/query_all_order", {
         
           mode: 'cors',
           body: formData
@@ -106,14 +122,110 @@ class order extends React.Component
           })
         })
       }
+
+      getColumnSearchProps = (dataIndex) => ({
+        filterDropdown: ({
+          setSelectedKeys, selectedKeys, confirm, clearFilters,
+        }) => (
+          <div style={{ padding: 8 }}>
+            <Input
+              ref={node => { this.searchInput = node; }}
+              placeholder={`Search ${dataIndex}`}
+              value={selectedKeys[0]}
+              onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+              onPressEnter={() => this.handleSearch(selectedKeys, confirm)}
+              style={{ width: 188, marginBottom: 8, display: 'block' }}
+            />
+            <Button
+              type="primary"
+              onClick={() => this.handleSearch(selectedKeys, confirm)}
+              icon="search"
+              size="small"
+              style={{ width: 90, marginRight: 8 }}
+            >
+              Search
+            </Button>
+            <Button
+              onClick={() => this.handleReset(clearFilters)}
+              size="small"
+              style={{ width: 90 }}
+            >
+              Reset
+            </Button>
+          </div>
+        ),
+        filterIcon: filtered => <Icon type="search" style={{ color: filtered ? '#1890ff' : undefined }} />,
+        onFilter: (value, record) => record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
+        onFilterDropdownVisibleChange: (visible) => {
+          if (visible) {
+            setTimeout(() => this.searchInput.select());
+          }
+        },
+        render: (text) => (
+          <Highlighter
+            highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+            searchWords={[this.state.searchText]}
+            autoEscape
+            textToHighlight={text.toString()}
+          />
+        ),
+      })
+    
+      handleSearch = (selectedKeys, confirm) => {
+        confirm();
+        this.setState({ searchText: selectedKeys[0] });
+      }
+    
+      handleReset = (clearFilters) => {
+        clearFilters();
+        this.setState({ searchText: '' });
+      }
+
+
+
+
       render() {
-        const columns = this.state.columns.map((col, index) => ({
+       /* const columns = this.state.columns.map((col, index) => ({
           ...col,
           onHeaderCell: column => ({
             width: column.width,
             onResize: this.handleResize(index),
           }),
-        }));
+        }));*/
+        const columns =[{
+            title: 'userid',
+            dataIndex: 'userid',
+            width: 200,
+            ...this.getColumnSearchProps('userid'),
+          },{
+          title: 'orderid',
+          dataIndex: 'orderid',
+          width: 200,
+          ...this.getColumnSearchProps('orderid'),
+        }, {
+          title: 'Price',
+          dataIndex: 'price',
+          width: 100,
+        }, {
+          title: 'Bookname',
+          dataIndex: 'bookname',
+          width: 100,
+          ...this.getColumnSearchProps('bookname'),
+        }, {
+          title: 'Number',
+          dataIndex: 'number',
+          width: 100,
+        },{
+          title: 'Date',
+          dataIndex: 'ordertime',
+          width: 100,
+          ...this.getColumnSearchProps('ordertime'),
+        }, {
+          title: 'Action',
+          key: 'action',
+          render: () => (
+            <a href="javascript:;">Delete</a>
+          ), },];
     
         return (
             <Layout>
@@ -127,7 +239,7 @@ class order extends React.Component
                     <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
                         <Menu.Item key="1">
                             <Icon type="book" />
-                            <span className="nav-text">Order view</span>
+                            <span className="nav-text">Order management</span>
                         </Menu.Item>
                         
                     </Menu>
@@ -162,7 +274,6 @@ class order extends React.Component
             columns={columns}
             dataSource={this.state.users}
           />
-                        <Button type="default" icon="money" >CHECK NOW!</Button>
                         <Button type="default" icon="home"><Link to ="/">Back to index</Link></Button>
                          
                         </div>
@@ -177,4 +288,4 @@ class order extends React.Component
 
 
  }
- export default order;
+ export default ordermanagement;
