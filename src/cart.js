@@ -8,9 +8,10 @@ import { Link } from 'react-router-dom';
 import Highlighter from 'react-highlight-words';
 import { Resizable } from 'react-resizable';
 import Normalchecknow from './checknow';
-
+import Normalcheckall from './checkall';
 
 const WrappedNormalchecknow = Form.create({ name: 'normal_login' })(Normalchecknow);
+const WrappedNormalcheckall=Form.create({name: 'normal_login'})(Normalcheckall);
 
 const { Header, Content, Footer, Sider } = Layout;
 const ResizeableTitle = (props) => {
@@ -164,7 +165,10 @@ class cart extends React.Component
 
 
           <WrappedNormalchecknow></WrappedNormalchecknow>
-                        <Button type="default" icon="money">CHECK NOW!</Button>
+          <br />
+          <br />
+          <WrappedNormalcheckall></WrappedNormalcheckall>
+                        <Button type="default" icon="money">购买全部商品</Button>
                         <Button type="default" icon="home"><Link to ="/">Back to index</Link></Button>
                          
                         </div>

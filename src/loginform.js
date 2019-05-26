@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import cookie from 'react-cookies';
 import { the_config } from './config';
 import axios from 'axios';
+import { format } from 'url';
 const FormItem = Form.Item;
 
 class Login extends React.Component {
@@ -17,10 +18,12 @@ class Login extends React.Component {
       super(props);
       this.state={
         users:[],
-        isLoaded:false
+        isLoaded:false,
+        label:[],
       }
+    
     }
-
+    
 
 
     handleSubmit = (e) => {
@@ -30,16 +33,18 @@ class Login extends React.Component {
         formData.append('username', this.props.form.getFieldValue("username"));
         formData.append('userpwd', this.props.form.getFieldValue("userpwd"));
         the_config.username=this.props.form.getFieldValue("username");
+       
+ 
         fetch(url, {
                 method: 'post',
                 mode: 'cors',
                 body: formData
             }).then(function (response) {
-            return response.text()
+               return response.text()
+           
         }).then(function (body) {
                 message.info(body);
             });
-
 
             const _this=this;
             axios.get("user/checkuser")
@@ -57,25 +62,22 @@ class Login extends React.Component {
               })
             })
           
-    
-            if(this.props.form.getFieldValue("username")=="root")
-            {
-              const w=window.open('about:blank');
-               w.location.href="/admin"
-            }
-            else
-            {
-              if(this.state.users=="0")
-              {
-                const w=window.open('about:blank');
-               w.location.href="/"
-              }
-              else
-              {
-                const w=window.open('about:blank');
-                w.location.href="/notfound"
-              }
-            }
+           if(this.state.users==1)
+           {
+            const w=window.open('about:blank');
+            w.location.href="/admin"
+           }
+           if(this.state.users==0)
+           {
+            const w=window.open('about:blank');
+            w.location.href="/"
+           }
+           if(this.state.users==2)
+           {
+            const w=window.open('about:blank');
+            w.location.href="/notfound"
+           }
+            
 
  }
 

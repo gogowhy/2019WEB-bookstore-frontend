@@ -2,18 +2,16 @@ import { Layout, Menu, Breadcrumb, Icon,Button,Form, Table,Input} from 'antd';
 import axios from 'axios';
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import logo from './logo.svg';
-import './bookview.css' ;
+import logo from '../logo.svg';
+import '../bookview.css' ;
 import { Link } from 'react-router-dom';
 import Highlighter from 'react-highlight-words';
-import Normaladdtocart from './addtocart';
-import Normaldetailform from './bookdetail/detailfrom';
+
 
 const { Header, Content, Footer, Sider } = Layout;
-const WrappedNormaladdtocart = Form.create({ name: 'normal_login' })(Normaladdtocart);
-const WrappedNormaldetailform =Form.create({ name: 'normal_login' })(Normaldetailform);
 
-class bookview extends React.Component {
+
+class bookdetail extends React.Component {
     state = {
         searchText: '',
         collapsed: false
@@ -29,7 +27,7 @@ class bookview extends React.Component {
     
       componentDidMount(){
         const _this=this;    //先存一下this，以防使用箭头函数this会指向我们不希望它所指向的对象。
-        axios.get("books/queryAll")
+        axios.post("books/querydetail")
         .then(function (response) {
           _this.setState({
             users:response.data,
@@ -131,8 +129,6 @@ class bookview extends React.Component {
         dataIndex: 'repertory',
         key: 'repertory',
         ...this.getColumnSearchProps('repertory'),
-      },{
-        title: 'details', dataIndex: '', key: 'x', render: () => <a onClick={this.send_data} >details</a>,
       }
     ];
   
@@ -183,11 +179,6 @@ class bookview extends React.Component {
                        } />
 
 
-                    <WrappedNormaladdtocart> </WrappedNormaladdtocart>
-
-                    <br />
-                    <br />
-                    <WrappedNormaldetailform></WrappedNormaldetailform>
                     <Button type="default" icon="home"><Link to ="/">Back to index</Link></Button>
                    
 
@@ -209,4 +200,4 @@ class bookview extends React.Component {
 }
 
 
-export default bookview;
+export default bookdetail;

@@ -7,11 +7,12 @@ import '../bookview.css' ;
 import { Link } from 'react-router-dom';
 import Highlighter from 'react-highlight-words';
 import Normalbooksalesform from './salesform';
+import Normaltimesales from './timesales';
 
 const { Header, Content, Footer, Sider } = Layout;
 
 const Wrappednormalbooksales=Form.create({name:'normal_login'})(Normalbooksalesform);
-
+const Wrappednormaltimesales=Form.create({name:'normal_login'})(Normaltimesales);
 
 class booksales extends React.Component {
     state = {
@@ -75,7 +76,7 @@ class booksales extends React.Component {
                     <Wrappednormalbooksales></Wrappednormalbooksales>
 
                      
-
+                    <Wrappednormaltimesales></Wrappednormaltimesales>
 
 
                     <br/>
