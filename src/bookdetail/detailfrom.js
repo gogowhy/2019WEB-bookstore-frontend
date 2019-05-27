@@ -1,11 +1,12 @@
 import React from 'react';
-import {Form, Icon, Input, Button, message} from 'antd';
+import {Form, Icon, Input, Button, message, Card} from 'antd';
 import 'whatwg-fetch';
 import '../Login.css';
 import { Link } from 'react-router-dom';
 import cookie from 'react-cookies';
 
 const FormItem = Form.Item;
+const { Meta } = Card;
 
 class detailform extends React.Component {
     //提交购物车事件

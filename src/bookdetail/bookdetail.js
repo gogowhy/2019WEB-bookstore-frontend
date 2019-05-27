@@ -1,4 +1,5 @@
-import { Layout, Menu, Breadcrumb, Icon,Button,Form, Table,Input} from 'antd';
+import { Layout, Menu, Breadcrumb, Icon,Button,Form, Table,Input,Card,Divider, Comment, Avatar } from 'antd';
+
 import axios from 'axios';
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
@@ -6,9 +7,34 @@ import logo from '../logo.svg';
 import '../bookview.css' ;
 import { Link } from 'react-router-dom';
 import Highlighter from 'react-highlight-words';
-
+import Normalbookcomment from './bookcomment';
 
 const { Header, Content, Footer, Sider } = Layout;
+const { Meta } = Card;
+
+const ExampleComment = ({ children }) => (
+  <Comment
+    actions={[<span>Reply to</span>]}
+    author={<a>Han Solo</a>}
+    avatar={
+      <Avatar
+        src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+        alt="Han Solo"
+      />
+    }
+    content={
+      <p>
+        We supply a series of design principles, practical patterns and high quality design
+        resources (Sketch and Axure).
+      </p>
+    }
+  >
+    {children}
+  </Comment>
+);
+
+
+const WrappedNormalbookcomment=Form.create({name:'normal_login'})(Normalbookcomment);
 
 
 class bookdetail extends React.Component {
@@ -42,6 +68,7 @@ class bookdetail extends React.Component {
           })
         })
       }
+
 
       getColumnSearchProps = (dataIndex) => ({
         filterDropdown: ({
@@ -172,11 +199,34 @@ class bookdetail extends React.Component {
                     </Breadcrumb>
                     <div style={{ padding: 24, background: '#fff', minHeight: 780 }}>Book view
                     
+                    <Card
+    hoverable
+    style={{ width: 240 }}
+    cover={<img alt="example" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1558948202767&di=2ca14bbaff8e3a4bc9ee23019bcba674&imgtype=0&src=http%3A%2F%2Fpic42.photophoto.cn%2F20170306%2F0013026190950282_b.jpg" />}
+  >
+    <Meta title="Book picture" />
+  </Card>
+
+  
+  <Divider>Book detail</Divider>
+                    
+                    
+                    
                     <Table columns={columns} 
                     expandedRowRender={record => <p style={{ margin: 0 }}>{record.description}</p>}
                    dataSource={
                      this.state.users
                        } />
+<Divider>comments of the book</Divider>
+<ExampleComment>
+    <ExampleComment>
+      <ExampleComment />
+      <ExampleComment />
+    </ExampleComment>
+  </ExampleComment>
+  
+<Divider>Commit your comment</Divider>
+<WrappedNormalbookcomment></WrappedNormalbookcomment>
 
 
                     <Button type="default" icon="home"><Link to ="/">Back to index</Link></Button>
