@@ -1,8 +1,10 @@
-import { Comment, Avatar, Form, Button, List, Input } from 'antd';
+import { Comment, Avatar, Form, Button, List, Input ,message} from 'antd';
 import moment from 'moment';
 import React, { Component } from 'react';
 const TextArea = Input.TextArea;
 
+
+const FormItem=Form.Item;
 const CommentList = ({ comments }) => (
   <List
     dataSource={comments}
@@ -32,30 +34,23 @@ class bookcomment extends React.Component {
     value: '',
   };
 
-  handleSubmit = () => {
-    if (!this.state.value) {
-      return;
-    }
+  handleSubmit = (e) => {
+   
+   
 
-    this.setState({
-      submitting: true,
-    });
-
-    setTimeout(() => {
-      this.setState({
-        submitting: false,
-        value: '',
-        comments: [
-          {
-            author: 'Han Solo',
-            avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-            content: <p>{this.state.value}</p>,
-            datetime: moment().fromNow(),
-          },
-          ...this.state.comments,
-        ],
-      });
-    }, 1000);
+    e.preventDefault();
+    let url = "/bookremark/newbookremark";
+    let formData = new FormData();
+    formData.append('remark', this.props.form.getFieldValue("remark"));
+    fetch(url, {
+            method: 'post',
+            mode: 'cors',
+            body: formData
+        }).then(function (response) {
+        return response.text()
+    }).then(function (body) {
+            message.info(body);
+        });
   };
 
   handleChange = e => {
@@ -66,26 +61,29 @@ class bookcomment extends React.Component {
 
   render() {
     const { comments, submitting, value } = this.state;
+    const {getFieldDecorator} = this.props.form;
 
     return (
       <div>
         {comments.length > 0 && <CommentList comments={comments} />}
-        <Comment
-          avatar={
-            <Avatar
-              src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-              alt="Han Solo"
-            />
-          }
-          content={
-            <Editor
-              onChange={this.handleChange}
-              onSubmit={this.handleSubmit}
-              submitting={submitting}
-              value={value}
-            />
-          }
-        />
+
+        <Form onSubmit={this.handleSubmit} >
+                <Comment>
+                    {getFieldDecorator('remark', {})(
+                        <Input
+                            placeholder="remark"/>
+                    )}
+                </Comment>
+
+               <FormItem> 
+                    <Button type="primary"  htmlType="submit"  className="login-form-button">
+                        提交您的评论
+                    </Button>
+                   
+                </FormItem>
+                
+               
+            </Form>
       </div>
     );
   }

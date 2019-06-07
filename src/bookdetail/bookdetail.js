@@ -12,26 +12,7 @@ import Normalbookcomment from './bookcomment';
 const { Header, Content, Footer, Sider } = Layout;
 const { Meta } = Card;
 
-const ExampleComment = ({ children }) => (
-  <Comment
-    actions={[<span>Reply to</span>]}
-    author={<a>Han Solo</a>}
-    avatar={
-      <Avatar
-        src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-        alt="Han Solo"
-      />
-    }
-    content={
-      <p>
-        We supply a series of design principles, practical patterns and high quality design
-        resources (Sketch and Axure).
-      </p>
-    }
-  >
-    {children}
-  </Comment>
-);
+
 
 
 const WrappedNormalbookcomment=Form.create({name:'normal_login'})(Normalbookcomment);
@@ -46,7 +27,8 @@ class bookdetail extends React.Component {
         super(props);
         this.state={
           users:[],
-          isLoaded:false
+          isLoaded:false,
+          bookcomments:[]
         }
       }
       
@@ -67,6 +49,25 @@ class bookdetail extends React.Component {
             error:error
           })
         })
+
+
+        axios.post("bookremark/querythebook")
+        .then(function (response) {
+          _this.setState({
+            bookcomments:response.data,
+            isLoaded:true
+          });
+        })
+        .catch(function (error) {
+          console.log(error);
+          _this.setState({
+            isLoaded:false,
+            error:error
+          })
+        })
+
+
+
       }
 
 
@@ -128,7 +129,21 @@ class bookdetail extends React.Component {
         this.setState({ searchText: '' });
       }
   render() {
-      
+      const remarkcolumns=[
+        {
+        title: 'username',
+        dataIndex: 'username',
+        key: 'username',
+        width: '10%',
+        ...this.getColumnSearchProps('username'),
+        },
+        {
+          title: 'bookremark',
+          dataIndex: 'bookremark',
+          key: 'bookremark',
+          ...this.getColumnSearchProps('bookremark'),
+        }
+      ];
     const columns = [{
         title: 'bookname',
         dataIndex: 'name',
@@ -218,12 +233,12 @@ class bookdetail extends React.Component {
                      this.state.users
                        } />
 <Divider>comments of the book</Divider>
-<ExampleComment>
-    <ExampleComment>
-      <ExampleComment />
-      <ExampleComment />
-    </ExampleComment>
-  </ExampleComment>
+
+ <Table columns={remarkcolumns} 
+                    
+                   dataSource={
+                     this.state.bookcomments
+                       } />
   
 <Divider>Commit your comment</Divider>
 <WrappedNormalbookcomment></WrappedNormalbookcomment>
