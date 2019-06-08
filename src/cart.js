@@ -1,4 +1,4 @@
-import { Layout, Menu, Breadcrumb, Icon,Button,Form, Table,Input} from 'antd';
+import { Layout, Menu, Breadcrumb, Icon,Button,Form, Table,Input,Divider} from 'antd';
 import axios from 'axios';
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
@@ -161,12 +161,10 @@ class cart extends React.Component
             columns={columns}
             dataSource={this.state.users}
           />
-
-
+<Divider>为某一个订单id结账</Divider>>
 
           <WrappedNormalchecknow></WrappedNormalchecknow>
-          <br />
-          <br />
+          <Divider>为购物车中的所有商品结账</Divider>
           <WrappedNormalcheckall></WrappedNormalcheckall>
                         <Button type="default" icon="money">购买全部商品</Button>
                         <Button type="default" icon="home"><Link to ="/">Back to index</Link></Button>

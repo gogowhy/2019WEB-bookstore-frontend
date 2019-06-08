@@ -1,4 +1,4 @@
-import { Layout, Menu, Breadcrumb, Icon,Button,Form, Table,Input} from 'antd';
+import { Layout, Menu, Breadcrumb, Icon,Button,Form, Table,Input,Divider} from 'antd';
 import axios from 'axios';
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
@@ -8,11 +8,13 @@ import { Link } from 'react-router-dom';
 import Highlighter from 'react-highlight-words';
 import Normalbooksalesform from './salesform';
 import Normaltimesales from './timesales';
+import Normalallbooksalestimes from'./allbooksalestimes';
 
 const { Header, Content, Footer, Sider } = Layout;
 
 const Wrappednormalbooksales=Form.create({name:'normal_login'})(Normalbooksalesform);
 const Wrappednormaltimesales=Form.create({name:'normal_login'})(Normaltimesales);
+const Wrappednormalallbooksalestimes=Form.create({name:'normal_login'})(Normalallbooksalestimes);
 
 class booksales extends React.Component {
     state = {
@@ -72,13 +74,17 @@ class booksales extends React.Component {
                         
                     </Breadcrumb>
                     <div style={{ padding: 24, background: '#fff', minHeight: 780 }}>Book management
+                   
+                    <Divider>查询某本书籍的总销量</Divider>
                     
                     <Wrappednormalbooksales></Wrappednormalbooksales>
 
-                     
+                     <Divider>查询某本书籍在指定时间以后的销量</Divider>
                     <Wrappednormaltimesales></Wrappednormaltimesales>
 
+                     <Divider>查询所有书籍在指定时间以后的销量</Divider>
 
+                   <Wrappednormalallbooksalestimes></Wrappednormalallbooksalestimes>
                     <br/>
                     <Button type="default" icon="home"><Link to ="/admin">Back to management</Link></Button>
                      

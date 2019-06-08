@@ -1,4 +1,4 @@
-import { Layout, Menu, Breadcrumb, Icon,Button,Form, Table,Input} from 'antd';
+import { Layout, Menu, Breadcrumb, Icon,Button,Form, Table,Input,Divider} from 'antd';
 import axios from 'axios';
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
@@ -189,13 +189,13 @@ class bookmanagement extends React.Component {
                      this.state.users
                        } />
 
-
+                    <Divider>删除书籍</Divider>
                     <WrappedNormalbookdelete> </WrappedNormalbookdelete>
-
+                    <Divider>修改书籍的库存</Divider>
                     <WrappedNormalbooknumber></WrappedNormalbooknumber>
-
+                    <Divider>修改书籍的description</Divider>
                     <Wrappednormalbookdescription></Wrappednormalbookdescription>
-
+                    <Divider>新增一本书籍</Divider>
                     <WrappedNormalnewbook></WrappedNormalnewbook>
 
               

@@ -7,13 +7,12 @@ import cookie from 'react-cookies';
 
 const FormItem = Form.Item;
 
-class timesales extends React.Component {
-    //查询一本书籍在一定时间的销量
+class cusstatistics extends React.Component {
+    //查询一个顾客在一定时间内的购买情况
     handleSubmit = (e) => {
         e.preventDefault();
-        let url = "/order/timesalesall";
+        let url = "/order/custimebuy";
         let formData = new FormData();
-        formData.append('bookname', this.props.form.getFieldValue("bookname"));
         formData.append('year', this.props.form.getFieldValue("year"));
         formData.append('month', this.props.form.getFieldValue("month"));
         formData.append('date', this.props.form.getFieldValue("date"));
@@ -32,37 +31,30 @@ class timesales extends React.Component {
         return (
             <Form onSubmit={this.handleSubmit} className="login-form">
                 <FormItem>
-                    {getFieldDecorator('bookname', {})(
-                        <Input
-                            prefix={< Icon type = "book" style = {{ fontSize: 13 }}/>}
-                            placeholder="请输入您想查询销量的书籍名称"/>
-                    )}
-                </FormItem>
-                <FormItem>
                     {getFieldDecorator('year', {})(
                         <Input
                             prefix={< Icon type = "time" style = {{ fontSize: 13 }}/>}
-                            placeholder="请输入您想查询销量的书籍开始年份"/>
+                            placeholder="请输入您想查询购买情况开始年份"/>
                     )}
                 </FormItem>
                 <FormItem>
                     {getFieldDecorator('month', {})(
                         <Input
                             prefix={< Icon type = "time" style = {{ fontSize: 13 }}/>}
-                            placeholder="请输入您想查询销量的书籍开始月份"/>
+                            placeholder="请输入您想查询购买情况开始月份"/>
                     )}
                 </FormItem>
                 <FormItem>
                     {getFieldDecorator('date', {})(
                         <Input
                             prefix={< Icon type = "time" style = {{ fontSize: 13 }}/>}
-                            placeholder="请输入您想查询销量的书籍开始日期"/>
+                            placeholder="请输入您想查询购买情况开始日期"/>
                     )}
                 </FormItem>
               
                 <FormItem>
                     <Button type="primary" htmlType="submit" className="login-form-button">
-                   查询这本书籍在该时间以后的销量
+                   查询在该时间以后的购买情况
                     </Button>
                 </FormItem>
             </Form>
@@ -70,5 +62,5 @@ class timesales extends React.Component {
         );
     }
 }
-const WrappedNormaltimesales = Form.create()(timesales);
-export default WrappedNormaltimesales;
+const WrappedNormalcusstatistics = Form.create()(cusstatistics);
+export default WrappedNormalcusstatistics;

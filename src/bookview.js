@@ -1,4 +1,4 @@
-import { Layout, Menu, Breadcrumb, Icon,Button,Form, Table,Input} from 'antd';
+import { Layout, Menu, Breadcrumb, Icon,Button,Form, Table,Input,Divider} from 'antd';
 import axios from 'axios';
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
@@ -182,11 +182,10 @@ class bookview extends React.Component {
                      this.state.users
                        } />
 
-
+                    <Divider>购买书籍</Divider>
                     <WrappedNormaladdtocart> </WrappedNormaladdtocart>
 
-                    <br />
-                    <br />
+                    <Divider>查询书籍详情</Divider>
                     <WrappedNormaldetailform></WrappedNormaldetailform>
                     <Button type="default" icon="home"><Link to ="/">Back to index</Link></Button>
                    

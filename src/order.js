@@ -1,4 +1,4 @@
-import { Layout, Menu, Breadcrumb, Icon,Button,Form, Table,Input} from 'antd';
+import { Layout, Menu, Breadcrumb, Icon,Button,Form, Table,Input,Divider} from 'antd';
 import axios from 'axios';
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
@@ -8,6 +8,13 @@ import { Link } from 'react-router-dom';
 import Highlighter from 'react-highlight-words';
 import { Resizable } from 'react-resizable';
 import { the_config } from './config';
+
+
+import Normalcusstatistics from './cusorderstatistics/cusstatistics';
+
+
+const WrappedNormalcusstatistics=Form.create({name:'normal_login'})(Normalcusstatistics);
+
 
 const { Header, Content, Footer, Sider } = Layout;
 const ResizeableTitle = (props) => {
@@ -162,6 +169,10 @@ class order extends React.Component
             columns={columns}
             dataSource={this.state.users}
           />
+        <Divider>查询一定时间至今的购买情况</Divider>
+
+
+        <WrappedNormalcusstatistics></WrappedNormalcusstatistics>
                         <Button type="default" icon="money" >CHECK NOW!</Button>
                         <Button type="default" icon="home"><Link to ="/">Back to index</Link></Button>
                          

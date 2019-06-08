@@ -1,4 +1,4 @@
-import { Layout, Menu, Breadcrumb, Icon,Button,Form, Table,Input} from 'antd';
+import { Layout, Menu, Breadcrumb, Icon,Button,Form, Table,Input,Divider} from 'antd';
 import axios from 'axios';
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
@@ -183,9 +183,9 @@ class usermanagement extends React.Component {
                      this.state.users
                        } />
 
-
+                    <Divider>禁止用户</Divider>  
                     <WrappedNormaluserforbid> </WrappedNormaluserforbid>
-
+                    <Divider>解禁用户</Divider>
                     <WrappedNormaluserbanlifting> </WrappedNormaluserbanlifting>
 
 

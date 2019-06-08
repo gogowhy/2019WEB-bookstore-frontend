@@ -8,7 +8,7 @@ import cookie from 'react-cookies';
 const FormItem = Form.Item;
 
 class salesform extends React.Component {
-    //查询书籍销量
+    //查询一本书籍的总销量
     handleSubmit = (e) => {
         e.preventDefault();
         let url = "/order/booksales";
@@ -38,7 +38,7 @@ class salesform extends React.Component {
               
                 <FormItem>
                     <Button type="primary" htmlType="submit" className="login-form-button">
-                   查询书籍销量
+                   查询该书籍总销量
                     </Button>
                 </FormItem>
             </Form>
