@@ -14,7 +14,7 @@ class checknow extends React.Component {
         e.preventDefault();
         let url = "/books/checknow";
         let formData = new FormData();
-        formData.append('orderid', this.props.form.getFieldValue("orderid"));
+        formData.append('cartid', this.props.form.getFieldValue("cartid"));
 
         fetch(url, {
                 method: 'post',
@@ -31,10 +31,10 @@ class checknow extends React.Component {
         return (
             <Form onSubmit={this.handleSubmit} className="login-form">
                 <FormItem>
-                    {getFieldDecorator('orderid', {})(
+                    {getFieldDecorator('cartid', {})(
                         <Input
                             prefix={< Icon type = "money" style = {{ fontSize: 13 }}/>}
-                            placeholder="请输入您想结账的订单号orderid"/>
+                            placeholder="请输入您想结账的购物车号cartid"/>
                     )}
                 </FormItem>
                 

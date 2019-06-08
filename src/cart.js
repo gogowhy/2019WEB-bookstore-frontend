@@ -41,7 +41,7 @@ class cart extends React.Component
  {
     state = {
         columns: [{
-          title: 'orderid',
+          title: 'cartid',
           dataIndex: 'orderid',
           width: 200,
         }, {
@@ -55,10 +55,6 @@ class cart extends React.Component
         }, {
           title: 'Number',
           dataIndex: 'number',
-          width: 100,
-        },{
-          title: 'Date',
-          dataIndex: 'ordertime',
           width: 100,
         }, {
           title: 'Action',
@@ -161,7 +157,7 @@ class cart extends React.Component
             columns={columns}
             dataSource={this.state.users}
           />
-<Divider>为某一个订单id结账</Divider>>
+<Divider>为某一个购物车id结账</Divider>>
 
           <WrappedNormalchecknow></WrappedNormalchecknow>
           <Divider>为购物车中的所有商品结账</Divider>
