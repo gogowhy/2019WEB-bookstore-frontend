@@ -10,7 +10,7 @@ import Normalbookdelete from './bookdelete';
 import Normalbooknumber from  './booknumber';
 import Normalnewbook from  './newbook';
 import Normalbookdescription from './bookdescription';
-
+import Editableformtable from './EditableTable';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -197,7 +197,7 @@ class bookmanagement extends React.Component {
                     <Wrappednormalbookdescription></Wrappednormalbookdescription>
                     <Divider>新增一本书籍</Divider>
                     <WrappedNormalnewbook></WrappedNormalnewbook>
-
+                    <Editableformtable></Editableformtable>
               
                     <Button type="default" icon="home"><Link to ="/admin">Back to management</Link></Button>
                      
