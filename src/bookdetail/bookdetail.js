@@ -8,6 +8,7 @@ import '../bookview.css' ;
 import { Link } from 'react-router-dom';
 import Highlighter from 'react-highlight-words';
 import Normalbookcomment from './bookcomment';
+import Normalnumberbuy from './numberbuy';
 
 const { Header, Content, Footer, Sider } = Layout;
 const { Meta } = Card;
@@ -16,7 +17,7 @@ const { Meta } = Card;
 
 
 const WrappedNormalbookcomment=Form.create({name:'normal_login'})(Normalbookcomment);
-
+const WrappedNormalnumberbuy=Form.create({name:'normal_login'})(Normalnumberbuy);
 
 class bookdetail extends React.Component {
     state = {
@@ -222,7 +223,9 @@ class bookdetail extends React.Component {
     <Meta title="Book picture" />
   </Card>
 
-  
+  <Divider>add to cart</Divider>
+
+  <WrappedNormalnumberbuy></WrappedNormalnumberbuy>
   <Divider>Book detail</Divider>
                     
                     
