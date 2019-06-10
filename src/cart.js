@@ -157,7 +157,7 @@ class cart extends React.Component
             columns={columns}
             dataSource={this.state.users}
           />
-<Divider>为某一个购物车id结账</Divider>>
+     <Divider>为某一个购物车id结账</Divider>>
 
           <WrappedNormalchecknow></WrappedNormalchecknow>
           <Divider>为购物车中的所有商品结账</Divider>
