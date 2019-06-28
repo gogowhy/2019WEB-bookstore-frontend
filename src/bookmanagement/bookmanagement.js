@@ -1,4 +1,4 @@
-import { Layout, Menu, Breadcrumb, Icon,Button,Form, Table,Input,Divider} from 'antd';
+import { Layout, Menu, Breadcrumb, Icon,Button,Form, Table,Input,Divider,message} from 'antd';
 import axios from 'axios';
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
@@ -109,6 +109,25 @@ class bookmanagement extends React.Component {
         clearFilters();
         this.setState({ searchText: '' });
       }
+
+      toShopDetails = (isbn) => {
+        //  this.props.history.push(`${this.props.match.url}/shopDetail`, {id});
+        let url = "/books/setbookdetailbyisbn";
+          let formData = new FormData();
+          formData.append('isbn', isbn);
+          fetch(url, {
+                  method: 'post',
+                  mode: 'cors',
+                  body: formData
+              }).then(function (response) {
+              return response.text()
+          }).then(function (body) {
+                  message.info(body);
+              });
+              const w=window.open('about:blank');
+          w.location.href="/bookdetail"
+      }
+
   render() {
       
     const columns = [{
@@ -138,6 +157,10 @@ class bookmanagement extends React.Component {
         dataIndex: 'repertory',
         key: 'repertory',
         ...this.getColumnSearchProps('repertory'),
+      },{
+        title: 'details', dataIndex: '', key: 'x', 
+        render: (text,record) => <a onClick={() => this.toShopDetails(
+          record.isbn)} >details</a>,
       }
     ];
   

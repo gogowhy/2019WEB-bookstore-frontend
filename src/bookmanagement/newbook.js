@@ -19,6 +19,7 @@ class newbook extends React.Component {
         formData.append('author', this.props.form.getFieldValue("author"));
         formData.append('repertory', this.props.form.getFieldValue("repertory"));
         formData.append('description', this.props.form.getFieldValue("description"));
+        formData.append('picture', this.props.form.getFieldValue("picture"));
         fetch(url, {
                 method: 'post',
                 mode: 'cors',
@@ -73,6 +74,13 @@ class newbook extends React.Component {
                         <Input
                             prefix={< Icon type = "number" style = {{ fontSize: 13 }}/>}
                             placeholder="请输入您想新增的书籍详情信息"/>
+                    )}
+                </FormItem>
+                <FormItem>
+                    {getFieldDecorator('picture', {})(
+                        <Input
+                            prefix={< Icon type = "number" style = {{ fontSize: 13 }}/>}
+                            placeholder="请输入您想新增的书的图片链接。注：图片格式为省略http://的未转义的字符串地址"/>
                     )}
                 </FormItem>
                 <FormItem>

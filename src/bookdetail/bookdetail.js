@@ -28,6 +28,7 @@ class bookdetail extends React.Component {
         super(props);
         this.state={
           users:[],
+          picture:[],
           isLoaded:false,
           bookcomments:[]
         }
@@ -67,7 +68,20 @@ class bookdetail extends React.Component {
           })
         })
 
-
+        axios.post("books/querythebookpicture")
+        .then(function (response) {
+          _this.setState({
+            picture:response.data,
+            isLoaded:true
+          });
+        })
+        .catch(function (error) {
+          console.log(error);
+          _this.setState({
+            isLoaded:false,
+            error:error
+          })
+        })
 
       }
 
@@ -218,7 +232,7 @@ class bookdetail extends React.Component {
                     <Card
     hoverable
     style={{ width: 240 }}
-    cover={<img alt="example" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1558948202767&di=2ca14bbaff8e3a4bc9ee23019bcba674&imgtype=0&src=http%3A%2F%2Fpic42.photophoto.cn%2F20170306%2F0013026190950282_b.jpg" />}
+    cover={<img alt="example" src={"http://"+this.state.picture} />}
   >
     <Meta title="Book picture" />
   </Card>
