@@ -138,8 +138,6 @@ class bookmanagement extends React.Component {
         dataIndex: 'repertory',
         key: 'repertory',
         ...this.getColumnSearchProps('repertory'),
-      },{
-        title: 'Buy it now!', dataIndex: '', key: 'x', render: () => <a href="javascript:;">Add</a>,
       }
     ];
   
